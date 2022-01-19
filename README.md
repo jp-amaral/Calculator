@@ -27,4 +27,4 @@ Prerequisites:
 - João Amaral
 
 ## License
-Copyright (c) Larv Corporation. All rights reserved.
+Copyright (c) LARV Corporation. All rights reserved.
