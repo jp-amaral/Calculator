@@ -2,7 +2,7 @@
 The Calculator app is a modern Multiplataform app written in python using kivy as graphic interface.
 The app provides standard, scientific, and programmer calculator functionality.
 
-![Calculator Screenshot](docs/Images/CalculatorScreenshot.png)
+![Calculator Screenshot](img/simple_calc_banner.png)
 
 ## Features
 - Standard Calculator functionality which offers basic operations.
