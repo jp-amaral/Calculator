@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# import kivy module
+>>>>>>> 6dd59652d8d16206fa1e7a37a295ce435e6d7e10
 import kivy
 kivy.require("1.9.1")
 from kivy.app import App
