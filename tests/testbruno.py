@@ -1,7 +1,4 @@
-# import kivy module
-from curses import window
 import kivy
-import random 
 kivy.require("1.9.1")
 from kivy.app import App
 from kivy.uix.button import Button
@@ -9,18 +6,14 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
- 
-# declaring the colours you can use directly also
-red = [1, 0, 0, 1]
-green = [0, 1, 0, 1]
-blue =  [0, 0, 1, 1]
-purple = [1, 0, 1, 1]
-Window.size= (600,800)
-# class in which we are creating the button
+
+Window.size= (400,600)
 class Calculator(App):
     def build(self):
+        self.notnumber = 0
         superBox = BoxLayout(orientation ='vertical')
         HB = BoxLayout(orientation ='horizontal')
+        self.array = []
         self.screen = Label(text ="",font_size=90)
         HB.add_widget(self.screen)
         VB = GridLayout()
@@ -38,18 +31,31 @@ class Calculator(App):
             butoes.append(Button(text=values[i],size_hint = (0.2,0.2),bold = True,background_color = color))
             butoes[i].bind(on_press=self.callback)
             VB.add_widget(butoes[i])
- 
-        # superbox used to again align the oriented widgets
         superBox.add_widget(HB)
         superBox.add_widget(VB)
         return superBox
     def callback(self,instance):
         if 'C' == instance.text:
             self.screen.text  = ""
+        elif '=' == instance.text:
+            self.CalcMath()
         else:
-            self.screen.text += instance.text
-            if '=' in self.screen.text:
-                self.screen.text += "result (?)"
+            self.array.append(instance.text)
+            print(self.array)
+            try:
+                int(instance.text)
+                #print("number")
+                if self.notnumber == 1:
+                    self.screen.text = ""
+                    self.notnumber = 0
+                self.screen.text += instance.text
+            except:
+                self.screen.text = instance.text
+                #print("not number")
+                self.notnumber = 1
+                
+    def CalcMath(self):
+        pass
 
 root = Calculator()
 root.run()
