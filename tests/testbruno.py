@@ -20,7 +20,6 @@ Window.size= (600,800)
 class Calculator(App):
        
     def build(self):
- 
         # To position oriented widgets again in the proper orientation
         # use of vertical orientation to set all widgets 
         superBox = BoxLayout(orientation ='vertical')
@@ -51,18 +50,16 @@ class Calculator(App):
             elif values[i] == "=":
                 color = '#00FF11'
             butoes.append(Button(text=values[i],size_hint = (0.2,0.2),bold = True,background_color = color))
+            butoes[i].bind(on_press=self.callback)
             VB.add_widget(butoes[i])
  
         # superbox used to again align the oriented widgets
         superBox.add_widget(HB)
         superBox.add_widget(VB)
- 
         return superBox
- 
-# creating the object root for BoxLayoutApp() class 
+    def  callback(self,instace):
+        print("ola")
+
+
 root = Calculator()
-   
-# run function runs the whole program
-# i.e run() method which calls the
-# target function passed to the constructor.
 root.run()
