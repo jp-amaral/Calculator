@@ -18,25 +18,11 @@ purple = [1, 0, 1, 1]
 Window.size= (600,800)
 # class in which we are creating the button
 class Calculator(App):
-       
     def build(self):
-        # To position oriented widgets again in the proper orientation
-        # use of vertical orientation to set all widgets 
         superBox = BoxLayout(orientation ='vertical')
- 
-        # To position widgets next to each other,
-        # use a horizontal BoxLayout.
         HB = BoxLayout(orientation ='horizontal')
-         
-        # styling the button boxlayout
-        screen = Label(text ="Screen")
- 
-        # HB represents the horizontal boxlayout orientation
-        # declared above
-        HB.add_widget(screen)
- 
-        # To position widgets above/below each other,
-        # use a vertical BoxLayout.
+        self.screen = Label(text ="",font_size=90)
+        HB.add_widget(self.screen)
         VB = GridLayout()
         VB.cols = 4
         butoes = []
@@ -57,9 +43,13 @@ class Calculator(App):
         superBox.add_widget(HB)
         superBox.add_widget(VB)
         return superBox
-    def  callback(self,instace):
-        print("ola")
-
+    def callback(self,instance):
+        if 'C' == instance.text:
+            self.screen.text  = ""
+        else:
+            self.screen.text += instance.text
+            if '=' in self.screen.text:
+                self.screen.text += "result (?)"
 
 root = Calculator()
 root.run()
