@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
-# import kivy module
->>>>>>> 6dd59652d8d16206fa1e7a37a295ce435e6d7e10
 import kivy
+import re
 kivy.require("1.9.1")
 from kivy.app import App
 from kivy.uix.button import Button
@@ -14,6 +11,7 @@ from kivy.core.window import Window
 Window.size= (400,600)
 class Calculator(App):
     def build(self):
+        self.result = 0
         self.notnumber = 0
         superBox = BoxLayout(orientation ='vertical')
         HB = BoxLayout(orientation ='horizontal')
@@ -22,6 +20,8 @@ class Calculator(App):
         HB.add_widget(self.screen)
         VB = GridLayout()
         VB.cols = 4
+        self.operators = ['/', '*', '+', '-']
+        self.regexPattern = '|'.join(map(re.escape, self.operators))
         butoes = []
         values = ["1","2","3","+","4","5","6","-","7","8","9","/","C","0","=","*"]
         for i in range(len(values)):
@@ -38,11 +38,17 @@ class Calculator(App):
         superBox.add_widget(HB)
         superBox.add_widget(VB)
         return superBox
+
     def callback(self,instance):
         if 'C' == instance.text:
             self.screen.text  = ""
         elif '=' == instance.text:
-            self.CalcMath()
+            expr = ''.join([str(elem) for elem in self.array])
+            self.CalcMath(expr)
+            self.array = []
+            self.array.append(self.result)
+            self.fresh_result = 1
+            self.screen.text = str(self.result)
         else:
             self.array.append(instance.text)
             print(self.array)
@@ -57,9 +63,46 @@ class Calculator(App):
                 self.screen.text = instance.text
                 #print("not number")
                 self.notnumber = 1
+        return instance.text
                 
-    def CalcMath(self):
-        pass
+    def CalcMath(self,expr):
+        print(expr)
+        operators = []
+        for char in expr:
+            if char in self.operators:
+                operators.append(char)
+        tokens = re.split(self.regexPattern, expr)
+        print(tokens)
+        print(operators)
+
+        while(len(tokens) != 1):
+            
+            for i in range(len(operators)):
+                if operators[i] == '/' or operators[i] == '*':
+                    print("mult or div")
+                    op = operators[i]
+                    operators.pop(i)
+                    a = int(tokens.pop(i))
+                    b = int(tokens.pop(i))
+                    if op == '/':result = a // b
+                    if op == '*':result = a*b
+                    tokens.insert(i, str(result))
+                    break
+            print(tokens)
+            print(operators)
+            if ('/' not in operators and '*' not in operators) and len(operators)>0:
+                print("add or sub")
+                for i in range(len(operators)):
+                    if operators[i] == '+' or operators[i] == '-':
+                        op = operators.pop(i)
+                        a = int(tokens.pop(i))
+                        b = int(tokens.pop(i))
+                        if op == '+':result = a + b
+                        if op == '-':result = a-b
+                        tokens.insert(i, str(result))
+                        break
+        
+        return tokens[0]
 
 root = Calculator()
 root.run()

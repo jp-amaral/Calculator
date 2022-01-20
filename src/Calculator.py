@@ -17,7 +17,7 @@ green = [0, 1, 0, 1]
 blue =  [0, 0, 1, 1]
 purple = [1, 0, 1, 1]
 
-Window.size = (600, 800)
+Window.size = (400, 600)
 
 # class in which we are creating the button
 class Calculator(App):
@@ -55,6 +55,13 @@ class Calculator(App):
         values = ["1","2","3","+","4","5","6","-","7","8","9","/","C","0","=","*"]
         color = '#8a8a8a'
         for i in range(len(values)):
+            color = '#00FFCE'
+            if values[i] == "*" or values[i] == "/" or values[i] == "+" or values[i] == "-":
+                color = '#0000CE'
+            elif values[i] == "C":
+                color = '#FF0000'
+            elif values[i] == "=":
+                color = '#00FF11'
             butoes.append(Button(text=values[i],size_hint = (0.2,0.2),bold = True,background_color = color))
             butoes[i].bind(on_press=self.callback)
             VB.add_widget(butoes[i])
