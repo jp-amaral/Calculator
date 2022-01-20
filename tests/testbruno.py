@@ -1,5 +1,4 @@
 # import kivy module
-from curses import window
 import kivy
 import random 
 kivy.require("1.9.1")
